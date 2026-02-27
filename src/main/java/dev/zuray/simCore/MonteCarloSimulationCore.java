@@ -1,14 +1,17 @@
 package dev.zuray.simCore;
 
+import dev.zuray.logging.Logger;
+
 public abstract class MonteCarloSimulationCore {
-    public abstract void setupSimulation();
-    public abstract void beforeReplication();
-    public abstract void doReplication();
-    public abstract void afterReplication();
-    public abstract void afterSimulation();
+    protected abstract void setupSimulation();
+    protected abstract void beforeReplication();
+    protected abstract void doReplication();
+    protected abstract void afterReplication();
+    protected abstract void afterSimulation();
     public void simulate(int replications) {
+        Logger.info("Running Monte Carlo Core simulation");
         boolean stopped = false;
-        this.beforeReplication();
+        this.setupSimulation();
         int counter = 0;
         while (counter < replications && !stopped) {
             this.beforeReplication();

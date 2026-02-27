@@ -5,8 +5,10 @@ import dev.zuray.logging.Logger;
 import java.util.Random;
 
 public class SeedManager {
+    public static SeedManager sm = new SeedManager();
+
     private final Random random;
-    public SeedManager() {
+    private SeedManager() {
         Logger.debug("Initializing random seed generator, main seed not specified");
         Random zeroRand = new Random();
         long seed = zeroRand.nextLong();
@@ -14,7 +16,7 @@ public class SeedManager {
         this.random = new Random(seed);
     }
 
-    public SeedManager(long seed) {
+    private SeedManager(long seed) {
         Logger.debug("Initializing random seed generator, main seed: " + seed);
         this.random = new Random(seed);
     }
