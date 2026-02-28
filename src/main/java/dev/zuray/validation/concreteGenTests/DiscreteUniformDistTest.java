@@ -14,10 +14,10 @@ public class DiscreteUniformDistTest extends AbstractGeneratorTest<Long> {
     }
 
     public DiscreteUniformDistTest() {
-        super(47, 13, 384, 53438);
-        long seed = 384;
-        long a = 47;
-        long c = 13;
+        super(11471, 1593, 11387, 53438);
+        long seed = 11384;
+        long a = 11471;
+        long c = 1593;
         long m = 53438;
         this.generator = new DiscreteDistGen(seed, a, c, m);
         this.bound = m;

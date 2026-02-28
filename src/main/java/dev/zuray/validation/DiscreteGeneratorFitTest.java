@@ -27,6 +27,7 @@ public class DiscreteGeneratorFitTest<T extends Number> {
     }
 
     private void calculateChi() {
+        this.chiVal = 0;
         for (Map.Entry<T, Integer> entry: this.theoreticalVals.entrySet()) {
             var value = this.values.get(entry.getKey());
             if (value == null) {

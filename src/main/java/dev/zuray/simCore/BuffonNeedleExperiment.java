@@ -13,8 +13,8 @@ public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
     private double res;
     private int count;
     public BuffonNeedleExperiment() {
-        this.genAlpha = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 4547, 5521, 843413163);
-        this.genY = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 86751, 45111, 484445389);
+        this.genAlpha = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 11471, 1593, 534384881);
+        this.genY = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 861237, 41123, 484445389);
     }
 
     @Override

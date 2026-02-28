@@ -57,7 +57,7 @@ public abstract class AbstractGeneratorTest<T extends Number> {
 
         Logger.info("Running chi-squared test");
         DiscreteGeneratorFitTest<T> fitTest = new DiscreteGeneratorFitTest<>(this.values, this.generateForFit());
-        if (fitTest.runTheTest(0.01)) {
+        if (!fitTest.runTheTest(0.1)) {
             throw new GeneratorValidationException("Generated value doesn't match desired distribution");
         }
     }
