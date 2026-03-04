@@ -15,7 +15,8 @@ public class Main {
                     DiscreteUniformDistTest test = new DiscreteUniformDistTest();
                     Logger.info("Starting the discreteUniformDist TEST!!!!");
                     try {
-                        test.validate(53438);
+                        test.validate(1_000_000);
+                        Logger.info("Generator validated!");
                     } catch (GeneratorValidationException e) {
                         Logger.fatal(e.getMessage());
                     }

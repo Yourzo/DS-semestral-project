@@ -46,6 +46,6 @@ public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
         double p = (res / this.count);
         double bottom = (p * this.spaceD);
         double pi = top / bottom;
-        Logger.info("Solution of the buffon experiment was: " + pi);
+        Logger.info("Solution of the Buffon experiment was: " + pi);
     }
 }

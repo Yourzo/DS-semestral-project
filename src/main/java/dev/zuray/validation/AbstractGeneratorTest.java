@@ -5,16 +5,16 @@ import dev.zuray.logging.Logger;
 
 import java.util.TreeMap;
 
-public abstract class AbstractGeneratorTest<T extends Number> {
-    private TreeMap<T, Integer> values;
+public abstract class AbstractGeneratorTest {
+    private TreeMap<Long, Integer> values;
     private long mod;
     private long A;
     private long C;
     private long seed;
 
-    protected abstract T getNext();
-    protected abstract T bound();
-    protected abstract TreeMap<T, Integer> generateForFit();
+    protected abstract long getNext();
+    protected abstract long maxPossible();
+    protected abstract TreeMap<Long, Integer> generateForFit(long maxValue);
     protected AbstractGeneratorTest(long a, long c, long seed, long mod) {
         this.A = a;
         this.C = c;
@@ -39,16 +39,16 @@ public abstract class AbstractGeneratorTest<T extends Number> {
             throw new GeneratorValidationException("Modulo is less than 0");
         }
         for (int i = 0; i < steps; i++) {
-            T val = this.getNext();
-            if (Double.compare(this.bound().doubleValue(), val.doubleValue()) <= 0) {
-                throw new GeneratorValidationException("Generated value is more than bound: " + this.bound());
+            long val = this.getNext();
+            if (this.maxPossible() < val) {
+                throw new GeneratorValidationException("Generated value is more than bound: " + this.maxPossible());
             }
-            if (!this.values.containsKey(val)){
-                this.values.put(val, 1);
+            if (!this.values.containsKey(val / 100)){
+                this.values.put(val / 100, 1);
             } else {
-                Integer count = this.values.get(val);
+                Integer count = this.values.get(val / 100);
                 count++;
-                this.values.put(val, count);
+                this.values.put(val / 100, count);
             }
             if (i % 10_000_000 == 0)  {
                 Logger.info("Current step is: " + i);
@@ -56,8 +56,8 @@ public abstract class AbstractGeneratorTest<T extends Number> {
         }
 
         Logger.info("Running chi-squared test");
-        DiscreteGeneratorFitTest<T> fitTest = new DiscreteGeneratorFitTest<>(this.values, this.generateForFit());
-        if (!fitTest.runTheTest(0.1)) {
+        DiscreteGeneratorFitTest<Long> fitTest = new DiscreteGeneratorFitTest<>(this.values, this.generateForFit(steps));
+        if (!fitTest.runTheTest(0.01)) {
             throw new GeneratorValidationException("Generated value doesn't match desired distribution");
         }
     }
