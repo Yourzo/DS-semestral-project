@@ -35,9 +35,4 @@ public class DiscreteDistGen implements Distribution<Long> {
         this.lastVal = (a * this.lastVal + c) % m;
         return this.lastVal;
     }
-
-    @Override
-    public long getM() {
-        return this.m;
-    }
 }

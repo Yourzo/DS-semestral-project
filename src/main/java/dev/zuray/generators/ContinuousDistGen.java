@@ -14,9 +14,4 @@ public class ContinuousDistGen implements Distribution<Double> {
     public Double getNext() {
         return (double) this.gen.getNext() / (double) m;
     }
-
-    @Override
-    public long getM() {
-        return this.m;
-    }
 }
