@@ -29,8 +29,8 @@ public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
 
     @Override
     protected void doReplication() {
-        a = Math.sin(Math.toRadians(this.genAlpha.getNextDouble() * 180)) * needleLen;
-        if (this.genY.getNextDouble() * spaceD + a > spaceD) {
+        a = Math.sin(Math.toRadians(this.genAlpha.getNext() * 180)) * needleLen;
+        if (this.genY.getNext() * spaceD + a > spaceD) {
             res++;
         }
     }

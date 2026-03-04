@@ -2,7 +2,7 @@ package dev.zuray.generators;
 
 import dev.zuray.logging.Logger;
 
-public class DiscreteDistGen {
+public class DiscreteDistGen implements Distribution<Long> {
     private long lastVal;
     private long a;
     private long c;
@@ -31,8 +31,13 @@ public class DiscreteDistGen {
         this.m = m;
     }
 
-    public long getNext() {
+    public Long getNext() {
         this.lastVal = (a * this.lastVal + c) % m;
         return this.lastVal;
+    }
+
+    @Override
+    public long getM() {
+        return this.m;
     }
 }

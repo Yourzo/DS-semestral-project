@@ -1,30 +1,81 @@
 package dev.zuray;
 
 import dev.zuray.exceptions.GeneratorValidationException;
+import dev.zuray.generators.*;
 import dev.zuray.logging.Logger;
 import dev.zuray.simCore.BuffonNeedleExperiment;
 import dev.zuray.validation.concreteGenTests.DiscreteUniformDistTest;
 
+import javax.management.relation.RelationNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
         ExecutorService executor = Executors.newFixedThreadPool(2);
+//        executor.submit(() -> {
+//                    DiscreteUniformDistTest test = new DiscreteUniformDistTest();
+//                    Logger.info("Starting the discreteUniformDist TEST!!!!");
+//                    try {
+//                        test.validate(10_000);
+//                        Logger.info("Generator validated!");
+//                    } catch (GeneratorValidationException e) {
+//                        Logger.fatal(e.getMessage());
+//                    }
+//                });
+//        executor.submit(() -> {
+//            Logger.info("Starting the program!");
+//            BuffonNeedleExperiment bne = new BuffonNeedleExperiment();
+//            bne.simulate(1_000_000);
+//        });
         executor.submit(() -> {
-                    DiscreteUniformDistTest test = new DiscreteUniformDistTest();
-                    Logger.info("Starting the discreteUniformDist TEST!!!!");
-                    try {
-                        test.validate(1_000_000);
-                        Logger.info("Generator validated!");
-                    } catch (GeneratorValidationException e) {
-                        Logger.fatal(e.getMessage());
-                    }
-                });
+            try {
+                var gen1 = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 123, 24147, 10);
+                var rn1 = new Range<Double>(gen1, 10.0, .1);
+                var gen2 = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 411, 673, 12);
+                var rn2 = new Range<Double>(gen2, 20.0, .5);
+                var gen3 = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 779, 213, 13);
+                var rn3 = new Range<Double>(gen3, 32.0, .2);
+                var gen4 = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 1231, 221, 30);
+                var rn4 = new Range<Double>(gen4, 45.0, .15);
+                var gen5 = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 19, 991, 10);
+                var rn5 = new Range<Double>(gen5, 75.0, .05);
+                ArrayList<Range<Double>> list = new ArrayList<>(Arrays.asList(rn1, rn2, rn3, rn4, rn5));
+                var genMain = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 1231, 2134, 2134212);
+                EmpiricDistribution<Double> black = new EmpiricDistribution<>(genMain, list);
+                if (black == null) {
+                    throw new RuntimeException();
+                }
+                ArrayList<Double> values = new ArrayList<>();
+                for (int i = 0; i < 100_000; i++) {
+                    values.add(black.getNext());
+                }
+                Logger.info("Black values generated");
+            }catch (Throwable t) {
+                t.printStackTrace();
+            }
+        });
         executor.submit(() -> {
-            Logger.info("Starting the program!");
-            BuffonNeedleExperiment bne = new BuffonNeedleExperiment();
-            bne.simulate(1_000_000_000);
+            try {
+                var gen1 = new DiscreteDistGen(SeedManager.sm.getNextSeed(), 123, 3141, 14);
+                var rn1 = new Range<Long>(gen1, 15L, .2);
+                var gen2 = new DiscreteDistGen(SeedManager.sm.getNextSeed(), 2131, 2141, 16);
+                var rn2 = new Range<Long>(gen2, 29L, .4);
+                var gen3 = new DiscreteDistGen(SeedManager.sm.getNextSeed(), 2131, 991, 20);
+                var rn3 = new Range<Long>(gen3, 45L, .4);
+                var list = new ArrayList<>(Arrays.asList(rn1, rn2, rn3));
+                var genMain = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 1231451, 215901, 124112447);
+                var blue = new EmpiricDistribution<Long>(genMain, list);
+                ArrayList<Long> values = new ArrayList<>();
+                for (int i = 0; i < 100_000; i++) {
+                    values.add(blue.getNext());
+                }
+                Logger.info("Blue values generated");
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         });
         executor.shutdown();
     }

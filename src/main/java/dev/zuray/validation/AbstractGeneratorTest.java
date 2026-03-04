@@ -6,15 +6,16 @@ import dev.zuray.logging.Logger;
 import java.util.TreeMap;
 
 public abstract class AbstractGeneratorTest {
-    private TreeMap<Long, Integer> values;
-    private long mod;
-    private long A;
-    private long C;
-    private long seed;
+    protected final TreeMap<Long, Integer> values;
+    private final long mod;
+    private final long A;
+    private final long C;
+    private final long seed;
 
     protected abstract long getNext();
     protected abstract long maxPossible();
     protected abstract TreeMap<Long, Integer> generateForFit(long maxValue);
+    protected abstract void chart();
     protected AbstractGeneratorTest(long a, long c, long seed, long mod) {
         this.A = a;
         this.C = c;
@@ -60,5 +61,6 @@ public abstract class AbstractGeneratorTest {
         if (!fitTest.runTheTest(0.01)) {
             throw new GeneratorValidationException("Generated value doesn't match desired distribution");
         }
+        this.chart();
     }
 }
