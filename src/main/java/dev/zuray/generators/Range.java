@@ -15,9 +15,9 @@ public class Range<T extends Number> {
     public T getNext() {
         T val = this.generator.getNext();
         if (val instanceof Long && this.offset instanceof Long) {
-            return (T) Long.valueOf(val.longValue() + this.offset.longValue());
+            return (T) Long.valueOf(val.longValue() % this.range + this.offset.longValue());
         }
-        return (T) Double.valueOf((val.doubleValue() * range) + this.offset.doubleValue());
+        return (T) Double.valueOf((val.doubleValue() * this.range) + this.offset.doubleValue());
     }
 
     public double getProbability() {
