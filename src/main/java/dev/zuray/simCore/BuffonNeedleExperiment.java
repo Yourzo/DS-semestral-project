@@ -1,20 +1,22 @@
 package dev.zuray.simCore;
 
-import dev.zuray.generators.ContinuousDistGen;
 import dev.zuray.generators.SeedManager;
 import dev.zuray.logging.Logger;
 
+import java.util.Random;
+
 public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
-    private ContinuousDistGen genAlpha;
-    private ContinuousDistGen genY;
+    private Random genAlpha;
+    private Random genY;
     private int needleLen = 8;
     private int spaceD = 10;
     private double a;
     private double res;
     private int count;
-    public BuffonNeedleExperiment() {
-        this.genAlpha = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 11471, 1593, 534384881);
-        this.genY = new ContinuousDistGen(SeedManager.sm.getNextSeed(), 861237, 41123, 484445389);
+    public BuffonNeedleExperiment(int replications) {
+        super(replications);
+        this.genAlpha = new Random(SeedManager.sm.getNextSeed());
+        this.genY = new Random(SeedManager.sm.getNextSeed());
     }
 
     @Override
@@ -29,8 +31,8 @@ public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
 
     @Override
     protected void doReplication() {
-        a = Math.sin(Math.toRadians(this.genAlpha.getNext() * 180)) * needleLen;
-        if (this.genY.getNext() * spaceD + a > spaceD) {
+        a = Math.sin(Math.toRadians(this.genAlpha.nextDouble() * 180)) * needleLen;
+        if (this.genY.nextDouble() * spaceD + a > spaceD) {
             res++;
         }
     }
@@ -38,6 +40,9 @@ public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
     @Override
     protected void afterReplication() {
         this.count++;
+        if (this.count % 100_000 == 0) {
+            Logger.info("Current step: " + this.count);
+        }
     }
 
     @Override
@@ -48,4 +53,6 @@ public class BuffonNeedleExperiment extends MonteCarloSimulationCore {
         double pi = top / bottom;
         Logger.info("Solution of the Buffon experiment was: " + pi);
     }
+
+    
 }

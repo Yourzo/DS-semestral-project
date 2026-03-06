@@ -2,6 +2,7 @@ package dev.zuray;
 
 import dev.zuray.generators.*;
 import dev.zuray.logging.Logger;
+import dev.zuray.simCore.BuffonNeedleExperiment;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtils;
@@ -16,28 +17,14 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
         ExecutorService executor = Executors.newFixedThreadPool(2);
-//        executor.submit(() -> {
-//                    DiscreteUniformDistTest test = new DiscreteUniformDistTest();
-//                    Logger.info("Starting the discreteUniformDist TEST!!!!");
-//                    try {
-//                        test.validate(10_000);
-//                        Logger.info("Generator validated!");
-//                    } catch (GeneratorValidationException e) {
-//                        Logger.fatal(e.getMessage());
-//                    }
-//                });
-//        executor.submit(() -> {
-//            Logger.info("Starting the program!");
-//            BuffonNeedleExperiment bne = new BuffonNeedleExperiment();
-//            bne.simulate(1_000_000);
-//        });
+        BuffonNeedleExperiment bf = new BuffonNeedleExperiment(2_000_000);
+        bf.start();
         executor.submit(() -> {
             try {
                 EmpiricDistribution<Double> black = new EmpiricDistribution<>(
