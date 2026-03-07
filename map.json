@@ -1,0 +1,36 @@
+{
+  "cityCount": 4,
+  "initial": "Zilina",
+  "roads":[
+    {
+      "c1": "Zilina",
+      "c2": "Divinka",
+      "paths": []
+    },
+    {
+      "c1": "Zilina",
+      "c2": "Rajecke Teplice",
+      "paths": []
+    },
+    {
+      "c1": "Zilina",
+      "c2": "Strecno",
+      "paths": []
+    },
+    {
+      "c1": "Divinka",
+      "c2": "Rajecke Teplice",
+      "paths": []
+    },
+    {
+      "c1": "Divinka",
+      "c2": "Strecno",
+      "paths": []
+    },
+    {
+      "c1": "Rajecke Teplice",
+      "c2": "Strecno",
+      "paths": []
+    }
+  ]
+}

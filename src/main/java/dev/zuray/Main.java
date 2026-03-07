@@ -34,7 +34,7 @@ public class Main {
                 );
                 ArrayList<Double> values = new ArrayList<>();
                 for (int i = 0; i < 1_000_000; i++) {
-                    values.add(black.getNext());
+                    values.add(black.next());
                 }
                 double[] doubles = values.stream().mapToDouble(Double::doubleValue).toArray();
 
@@ -74,7 +74,7 @@ public class Main {
                 );
                 ArrayList<Long> values = new ArrayList<>();
                 for (int i = 0; i < 1_000_000; i++) {
-                    values.add(blue.getNext());
+                    values.add(blue.next());
                 }
                 double[] measurements = values.stream().mapToDouble(Long::doubleValue).toArray();
 

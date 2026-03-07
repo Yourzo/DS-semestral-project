@@ -5,7 +5,7 @@ import dev.zuray.exceptions.EmpiricGeneratorValueWrongInternalStateError;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class EmpiricDistribution<T extends Number> {
+public class EmpiricDistribution<T extends Number> implements Distribution<T> {
     private final Random gen;
     private final ArrayList<Range> ranges;
     @SafeVarargs
@@ -17,7 +17,7 @@ public class EmpiricDistribution<T extends Number> {
         }
     }
 
-    public T getNext() {
+    public T next() {
         var val = this.gen.nextDouble();
         for (var range : this.ranges) {
             if (val < range.getProbability()) {
