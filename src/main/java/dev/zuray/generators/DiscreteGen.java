@@ -13,6 +13,6 @@ public class DiscreteGen implements Distribution<Integer> {
     }
 
     public Integer next() {
-        return this.gen.nextInt(this.upper - this.lower) + this.lower;
+        return this.gen.nextInt(this.upper - this.lower + 1) + this.lower;
     }
 }

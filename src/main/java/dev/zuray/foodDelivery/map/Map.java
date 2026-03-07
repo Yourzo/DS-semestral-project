@@ -1,10 +1,5 @@
 package dev.zuray.foodDelivery.map;
 
-import dev.zuray.generators.ContinuousGen;
-import dev.zuray.generators.DiscreteGen;
-import dev.zuray.generators.Distribution;
-import dev.zuray.generators.EmpiricDistribution;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,7 +33,7 @@ public class Map {
         if (!this.cities.containsKey(c.a.name)) {
             this.cities.put(c.a.name, c.a);
         }
-        this.cities.get(c.a.name).addRoad();
+//        this.cities.get(c.a.name).addRoad();
     }
 
     public class Point {
@@ -58,30 +53,6 @@ public class Map {
 
         public void addRoad(Road road) {
             this.roads.add(road);
-        }
-    }
-
-    public enum Colour {
-        RED(new DiscreteGen(55, 75)),
-        GREEN(new ContinuousGen(50., 80.)),
-        BLACK(new EmpiricDistribution<>(
-                new EmpiricDistribution.RangeData<>(10., 10., .1),
-                new EmpiricDistribution.RangeData<>(20., 12., .5),
-                new EmpiricDistribution.RangeData<>(32., 13., .2),
-                new EmpiricDistribution.RangeData<>(45., 30., .15),
-                new EmpiricDistribution.RangeData<>(75., 10., .05)
-        )),
-        BLUE(new EmpiricDistribution<>(
-                new EmpiricDistribution.RangeData<>(15L,14L, .2),
-                new EmpiricDistribution.RangeData<>(29L, 16L, .4),
-                new EmpiricDistribution.RangeData<>(45L, 20L, .4)
-        ));
-        private final Distribution<?> distribution;
-        Colour(Distribution<?> dist) {
-            this.distribution = dist;
-        }
-        public Distribution<?> getDist() {
-            return this.distribution;
         }
     }
 
